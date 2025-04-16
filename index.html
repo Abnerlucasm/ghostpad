@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GhostPad</title>
+  <link rel="stylesheet" href="src/css/styles.css">
+  <link rel="stylesheet" href="src/css/tema-claro.css">
+  <link rel="stylesheet" href="src/css/tema-escuro.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="tema-claro">
+  <!-- Indicadores de redimensionamento -->
+  <div class="resize-handle top"></div>
+  <div class="resize-handle right"></div>
+  <div class="resize-handle bottom"></div>
+  <div class="resize-handle left"></div>
+  <div class="resize-handle corner top-left"></div>
+  <div class="resize-handle corner top-right"></div>
+  <div class="resize-handle corner bottom-left"></div>
+  <div class="resize-handle corner bottom-right"></div>
+
+  <div class="window-controls">
+    <button class="window-control minimize" id="minimize-btn">
+      <i class="fas fa-minus"></i>
+    </button>
+    <button class="window-control maximize" id="maximize-btn">
+      <i class="fas fa-square"></i>
+    </button>
+    <button class="window-control close" id="close-btn">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="container">
+    <div class="header">
+      <div class="projeto-info" id="projeto-info">
+        <img src="src/images/logo.png" alt="GhostPad Logo" class="logo">
+        <span>GhostPad</span>
+      </div>
+      <div>
+        <div class="tema-dropdown">
+          <button class="tema-dropdown-btn">
+            <i class="fas fa-palette"></i>
+            <span class="tema-texto">Tema</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="tema-dropdown-content">
+            <a href="#" data-tema="sistema"><i class="fas fa-desktop"></i> Sistema</a>
+            <a href="#" data-tema="claro"><i class="fas fa-sun"></i> Claro</a>
+            <a href="#" data-tema="escuro"><i class="fas fa-moon"></i> Escuro</a>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="btn-home"><i class="fas fa-home"></i> Início</button>
+        <button class="btn btn-primary" id="novo-projeto"><i class="fas fa-plus"></i> Novo Projeto</button>
+        <button class="btn btn-primary" id="abrir-projeto"><i class="fas fa-folder-open"></i> Abrir Projeto</button>
+        <button class="btn btn-success" id="salvar" style="display: none;"><i class="fas fa-save"></i> Salvar</button>
+        <button class="btn btn-primary" id="modo-compacto" style="display: none;"><i class="fas fa-expand"></i> Modo Compacto</button>
+        <button class="btn btn-primary" id="sempre-topo" title="Manter sempre no topo"><i class="fas fa-thumbtack"></i></button>
+        <button class="btn btn-danger" id="fechar-projeto" style="display: none;"><i class="fas fa-times"></i> Fechar</button>
+      </div>
+    </div>
+    
+    <div class="conteudo-principal" id="conteudo-principal">
+      <div class="editor-container" id="editor-container">
+        <div class="toolbar">
+          <button class="toolbar-btn" data-command="bold" title="Negrito"><i class="fas fa-bold"></i></button>
+          <button class="toolbar-btn" data-command="italic" title="Itálico"><i class="fas fa-italic"></i></button>
+          <button class="toolbar-btn" data-command="underline" title="Sublinhado"><i class="fas fa-underline"></i></button>
+          <button class="toolbar-btn" data-command="strikethrough" title="Tachado"><i class="fas fa-strikethrough"></i></button>
+          <div class="separator"></div>
+          <button class="toolbar-btn" data-command="justifyLeft" title="Alinhar à esquerda"><i class="fas fa-align-left"></i></button>
+          <button class="toolbar-btn" data-command="justifyCenter" title="Centralizar"><i class="fas fa-align-center"></i></button>
+          <button class="toolbar-btn" data-command="justifyRight" title="Alinhar à direita"><i class="fas fa-align-right"></i></button>
+          <div class="separator"></div>
+          <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista não ordenada"><i class="fas fa-list-ul"></i></button>
+          <button class="toolbar-btn" data-command="insertOrderedList" title="Lista ordenada"><i class="fas fa-list-ol"></i></button>
+        </div>
+        <div id="editor" class="editor" contenteditable="true"></div>
+        <div class="status-bar" id="status-bar">Pronto</div>
+      </div>
+      
+      <div class="painel-lateral" id="painel-lateral">
+        <div class="projeto-info-container" id="projeto-info-container">
+          <h3>Detalhes do Projeto</h3>
+          <p><strong>Nome:</strong> <span id="projeto-nome-display"></span></p>
+          <p><strong>Observações:</strong> <span id="projeto-observacao-display"></span></p>
+          <p class="data-info">Criado em: <span id="projeto-data-criacao"></span></p>
+          <p class="data-info">Última modificação: <span id="projeto-ultima-modificacao"></span></p>
+          <button class="btn btn-danger" id="excluir-projeto" style="display: none;"><i class="fas fa-trash"></i> Excluir Projeto</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controle de transparência movido para após o conteúdo principal -->
+    <div class="controles-container">
+      <h3 class="controle-titulo">Transparência</h3>
+      <div class="controle-transparencia">
+        <input type="range" id="transparencia-slider" min="0.2" max="1.0" step="0.1" value="1.0" class="slider">
+      </div>
+    </div>
+    
+    <div class="bem-vindo" id="bem-vindo">
+      <h2>Bem-vindo ao GhostPad</h2>
+      <p>Este aplicativo permite que você crie e edite textos de forma segura, impedindo que o conteúdo seja capturado por gravadores de tela.</p>
+      <p>Para começar, crie um novo projeto ou abra um projeto existente.</p>
+    </div>
+    
+    <div class="projetos-recentes" id="projetos-recentes">
+      <h3>Projetos Recentes</h3>
+      <ul id="lista-projetos-recentes"></ul>
+    </div>
+  </div>
+  
+  <div class="notification" id="notification">Projeto salvo com sucesso!</div>
+  
+  <!-- Modal para novo projeto -->
+  <div class="modal-overlay" id="modal-novo-projeto">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Criar Novo Projeto</h2>
+        <button type="button" class="close-button" id="fechar-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-novo-projeto">
+          <div class="form-group">
+            <label for="nome-projeto">Nome do Projeto</label>
+            <input type="text" id="nome-projeto" class="form-control" required autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label for="observacao-projeto">Observações</label>
+            <textarea id="observacao-projeto" class="form-control" rows="4"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="cancelar-projeto">Cancelar</button>
+        <button type="button" class="btn btn-success" id="criar-projeto">Criar</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="src/js/renderer.js"></script>
+  
+  <footer class="footer">
+    <p>© 2024 GhostPad - Desenvolvido por <a href="https://github.com/abnerlucasm" target="_blank">Abner Lucas</a></p>
+  </footer>
+</body>
+</html> 

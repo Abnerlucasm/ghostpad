@@ -1,0 +1,39 @@
+# Dependências
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+*.log
+
+# Build
+dist/
+build/
+release/
+out/
+
+# Ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Arquivos de projeto específicos do VS Code e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos específicos do Electron
+.electron-builder.yml
+
+# Arquivos de banco de dados locais
+*.json
+!package.json
+!package-lock.json 

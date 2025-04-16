@@ -1,0 +1,58 @@
+{
+  "name": "ghostpad",
+  "version": "1.0.1",
+  "description": "Aplicativo oculto que permite armazenar texto em JSON e gerenciar projetos",
+  "main": "src/js/main.js",
+  "owner": "ghostpad",
+  "author": "Abner Lucas",
+  "copyright": "Abner Lucas",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder"
+  },
+  "keywords": [
+    "electron",
+    "oculto",
+    "texto",
+    "json",
+    "editor"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  },
+  "build": {
+    "appId": "com.ghostpad.app",
+    "productName": "GhostPad",
+    "files": [
+      "**/*",
+      "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+      "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+      "!**/node_modules/*.d.ts",
+      "!**/node_modules/.bin",
+      "!**/.{idea,git,cache,github,vscode}",
+      "!**/{.DS_Store,.git,.gitignore}"
+    ],
+    "directories": {
+      "buildResources": "resources",
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/images/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/images/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "src/images/icon.png"
+    }
+  }
+}

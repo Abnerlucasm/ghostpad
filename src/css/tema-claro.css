@@ -1,0 +1,518 @@
+/* Tema Claro - Nord Light */
+body.tema-claro {
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+body.tema-claro .container {
+  background-color: #f5f5f5;
+}
+
+body.tema-claro .header,
+body.tema-claro .editor-container,
+body.tema-claro .projetos-recentes,
+body.tema-claro .bem-vindo,
+body.tema-claro .projeto-info-container,
+body.tema-claro .modal,
+body.tema-claro .controles-container {
+  background-color: #ffffff;
+  box-shadow: none;
+  border-color: #e0e0e0;
+}
+
+body.tema-claro .editor {
+  background-color: #ffffff;
+  color: #333333;
+  border: none;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 16px;
+}
+
+body.tema-claro .editor:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+body.tema-claro .toolbar {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px;
+}
+
+body.tema-claro .toolbar-btn {
+  color: #333333;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+body.tema-claro .toolbar-btn:hover {
+  background-color: #e0e0e0;
+}
+
+body.tema-claro .toolbar-btn.active {
+  background-color: #e8e8e8;
+  color: #5E81AC;
+}
+
+body.tema-claro .separator {
+  background-color: #e0e0e0;
+  width: 1px;
+  height: 20px;
+  margin: 0 8px;
+}
+
+body.tema-claro .status-bar {
+  background-color: #f8f8f8;
+  color: #666666;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-top: 1px solid #e0e0e0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+body.tema-claro .btn {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  background: none;
+  color: #333333;
+  transition: all 0.2s;
+}
+
+body.tema-claro .btn-primary {
+  background-color: #f0f0f0;
+  border-color: #e0e0e0;
+}
+
+body.tema-claro .btn-primary:hover {
+  background-color: #e8e8e8;
+  border-color: #d0d0d0;
+}
+
+body.tema-claro .btn-success {
+  background-color: #f0f0f0;
+  border-color: #e0e0e0;
+  color: #5E81AC;
+}
+
+body.tema-claro .btn-success:hover {
+  background-color: #e8e8e8;
+  border-color: #d0d0d0;
+}
+
+body.tema-claro .btn-danger {
+  background-color: #f0f0f0;
+  border-color: #e0e0e0;
+  color: #BF616A;
+}
+
+body.tema-claro .btn-danger:hover {
+  background-color: #e8e8e8;
+  border-color: #d0d0d0;
+}
+
+body.tema-claro .logo {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+  border: 1px solid #5E81AC;
+  box-shadow: 0 0 3px rgba(94, 129, 172, 0.3);
+}
+
+body.tema-claro .projeto-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  color: #333333;
+}
+
+body.tema-claro .projeto-info span {
+  font-weight: 500;
+}
+
+body.tema-claro .projeto-info-container {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+body.tema-claro .projeto-info-container h3 {
+  color: #5E81AC;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+body.tema-claro .projeto-info-container p {
+  color: #333333;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+body.tema-claro .projeto-info-container strong {
+  color: #5E81AC;
+  font-weight: 500;
+}
+
+body.tema-claro .modal {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+body.tema-claro .modal-header {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 16px;
+}
+
+body.tema-claro .modal-body {
+  padding: 16px;
+}
+
+body.tema-claro .modal-footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 16px;
+}
+
+body.tema-claro .form-control {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  color: #333333;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+body.tema-claro .form-control:focus {
+  outline: none;
+  border-color: #5E81AC;
+  box-shadow: none;
+}
+
+body.tema-claro .notification {
+  background-color: #f0f0f0;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 13px;
+}
+
+body.tema-claro .notification.error {
+  background-color: #f0f0f0;
+  color: #BF616A;
+  border-color: #BF616A;
+}
+
+body.tema-claro .projetos-recentes {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+body.tema-claro .projetos-recentes h3 {
+  color: #5E81AC;
+  font-size: 14px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+body.tema-claro .projetos-recentes li {
+  color: #333333;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+body.tema-claro .projetos-recentes li:hover {
+  background-color: #e8e8e8;
+}
+
+body.tema-claro .bem-vindo {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 24px;
+  text-align: center;
+}
+
+body.tema-claro .bem-vindo h2 {
+  color: #5E81AC;
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+body.tema-claro .bem-vindo p {
+  color: #333333;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+body.tema-claro .controles-container {
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 16px;
+}
+
+body.tema-claro .controle-titulo {
+  color: #5E81AC;
+  font-size: 14px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+body.tema-claro .tema-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+body.tema-claro .tema-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+body.tema-claro .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  transition: .3s;
+}
+
+body.tema-claro input:checked + .slider {
+  background-color: #5E81AC;
+}
+
+body.tema-claro input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+body.tema-claro .tema-icon {
+  font-size: 14px;
+  z-index: 2;
+  transition: opacity 0.3s;
+  color: #666666;
+}
+
+body.tema-claro .tema-icon:first-child {
+  margin-right: 2px;
+}
+
+body.tema-claro .tema-icon:last-child {
+  margin-left: 2px;
+}
+
+body.tema-claro input:checked + .slider .tema-icon:first-child {
+  opacity: 0.5;
+}
+
+body.tema-claro input:checked + .slider .tema-icon:last-child {
+  opacity: 1;
+}
+
+body.tema-claro input:not(:checked) + .slider .tema-icon:first-child {
+  opacity: 1;
+}
+
+body.tema-claro input:not(:checked) + .slider .tema-icon:last-child {
+  opacity: 0.5;
+}
+
+/* Slider de transparência */
+body.tema-claro .controle-transparencia {
+  width: 100%;
+  padding: 8px 0;
+}
+
+body.tema-claro input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #e0e0e0;
+  border-radius: 2px;
+  outline: none;
+}
+
+body.tema-claro input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #5E81AC;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .3s;
+}
+
+body.tema-claro input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: #5E81AC;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  transition: background .3s;
+}
+
+body.tema-claro input[type="range"]::-webkit-slider-thumb:hover {
+  background: #4C566A;
+}
+
+body.tema-claro input[type="range"]::-moz-range-thumb:hover {
+  background: #4C566A;
+}
+
+/* Footer */
+.footer {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border-top: 1px solid #ddd;
+}
+
+.footer a:hover {
+  color: #0066cc;
+}
+
+body.tema-claro .tema-selector {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+body.tema-claro .tema-selector select {
+  background-color: #f0f0f0;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 30px;
+}
+
+body.tema-claro .tema-selector::after {
+  content: '▼';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333333;
+  pointer-events: none;
+  font-size: 10px;
+}
+
+body.tema-claro .tema-selector select:hover {
+  border-color: #5E81AC;
+}
+
+body.tema-claro .tema-selector select:focus {
+  outline: none;
+  border-color: #5E81AC;
+  box-shadow: 0 0 0 2px rgba(94, 129, 172, 0.2);
+}
+
+body.tema-claro .tema-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+body.tema-claro .tema-dropdown-btn {
+  background-color: #f0f0f0;
+  color: #333333;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+body.tema-claro .tema-dropdown-btn:hover {
+  background-color: #e8e8e8;
+  border-color: #5E81AC;
+}
+
+body.tema-claro .tema-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f0f0f0;
+  min-width: 160px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  z-index: 1000;
+}
+
+body.tema-claro .tema-dropdown-content a {
+  color: #333333;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+body.tema-claro .tema-dropdown-content a:hover {
+  background-color: #e8e8e8;
+  color: #5E81AC;
+}
+
+body.tema-claro .tema-dropdown-content a i {
+  width: 16px;
+  text-align: center;
+}
+
+body.tema-claro .tema-dropdown:hover .tema-dropdown-content {
+  display: block;
+}
+
+body.tema-claro .tema-dropdown:hover .tema-dropdown-btn {
+  background-color: #e8e8e8;
+  border-color: #5E81AC;
+}
+
+body.tema-claro .tema-dropdown-btn i.fa-chevron-down {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+body.tema-claro .tema-dropdown:hover .tema-dropdown-btn i.fa-chevron-down {
+  transform: rotate(180deg);
+} 
