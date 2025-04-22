@@ -9,7 +9,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "build:optimized": "node scripts/optimize-before-build.js && electron-builder --config electron-builder-optimized.json"
   },
   "keywords": [
     "electron",
@@ -35,16 +36,24 @@
       "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
       "!**/node_modules/*.d.ts",
       "!**/node_modules/.bin",
-      "!**/.{idea,git,cache,github,vscode}",
-      "!**/{.DS_Store,.git,.gitignore}"
+      "!**/{.DS_Store,.git,.gitignore}",
+      "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+      "!**/._*",
+      "!**/{.env,.env.example,.npmignore,.eslintrc,.eslintignore}"
     ],
     "directories": {
       "buildResources": "resources",
       "output": "dist"
     },
     "win": {
-      "target": "nsis",
-      "icon": "src/images/icon.ico"
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "src/images/icon.ico",
+      "artifactName": "${productName}-${version}-setup.${ext}"
     },
     "mac": {
       "target": "dmg",
@@ -53,6 +62,13 @@
     "linux": {
       "target": "AppImage",
       "icon": "src/images/icon.png"
-    }
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}-${version}-setup.${ext}"
+    },
+    "afterPack": "./scripts/optimize-after-pack.js"
   }
 }
