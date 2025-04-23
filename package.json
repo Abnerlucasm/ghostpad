@@ -10,7 +10,7 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder",
+    "build": "electron-builder --config electron-builder.json",
     "build:optimized": "node scripts/optimize-before-build.js && electron-builder --config electron-builder-optimized.json",
     "prepare": "husky",
     "commit": "npx git-cz",
