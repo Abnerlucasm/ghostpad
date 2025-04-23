@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Abnerlucasm/ghostpad/compare/v1.1.0...v1.3.0) (2025-04-23)
+
+
+### Features
+
+* **nova feature de atalhos:** adicionar novos atalhos de teclado e melhorar a contagem regressiva ([8003b52](https://github.com/Abnerlucasm/ghostpad/commit/8003b52690113aa23b64e0e913f103103f37e49a))
+
+## [1.2.0](https://github.com/Abnerlucasm/ghostpad/compare/v1.1.0...v1.2.0) (2025-04-23)
+
+
+### Features
+
+* **nova feature de atalhos:** adicionar novos atalhos de teclado e melhorar a contagem regressiva ([8003b52](https://github.com/Abnerlucasm/ghostpad/commit/8003b52690113aa23b64e0e913f103103f37e49a))
+
 ## 1.1.0 (2025-04-23)
 
 
