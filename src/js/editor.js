@@ -89,7 +89,7 @@ function exibirInfoTempo(palavra, tempoTotal, velocidade) {
 }
 
 function ajustarVelocidade(incremento) {
-    const velocidadeInput = document.getElementById('velocidade');
+    const velocidadeInput = document.getElementById('velocidade-teleprompter');
     if (!velocidadeInput) return;
     
     let valorAtual = parseFloat(velocidadeInput.value);
@@ -340,65 +340,39 @@ function destacarPalavraAtual(elemento, palavraFoco) {
     processarNo(elemento);
 }
 
-// Função para mostrar instruções de uso
-function mostrarInstrucoesUso() {
-    // Remove qualquer info anterior
-    const infoExistente = document.querySelector('.info-atalho');
-    if (infoExistente) {
-        infoExistente.remove();
-        return; // Se já existe, remove e sai da função (toggle)
+// Função para reiniciar o teleprompter
+function reiniciarTeleprompter() {
+    if (!teleprompterAtivo) return;
+    
+    if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = null;
     }
     
-    // Cria o elemento de informação
-    const infoAtalho = document.createElement('div');
-    infoAtalho.className = 'info-atalho';
+    indicePalavraAtual = 0;
+    limparDestaquesAnteriores();
     
-    // Define os atalhos
-    const atalhos = [
-        { tecla: 'P', descricao: 'Pausar/Continuar' },
-        { tecla: '↑', descricao: 'Aumentar velocidade' },
-        { tecla: '↓', descricao: 'Diminuir velocidade' },
-        { tecla: 'Home', descricao: 'Reiniciar leitura' },
-        { tecla: 'ESC', descricao: 'Parar teleprompter' }
-    ];
+    const infoTimer = document.querySelector('.info-timer');
+    if (infoTimer) infoTimer.remove();
     
-    // Cria os elementos para cada atalho
-    atalhos.forEach(atalho => {
-        const item = document.createElement('div');
-        item.className = 'info-atalho-item';
-        
-        const kbd = document.createElement('kbd');
-        kbd.textContent = atalho.tecla;
-        
-        const desc = document.createElement('span');
-        desc.textContent = atalho.descricao;
-        
-        item.appendChild(kbd);
-        item.appendChild(desc);
-        infoAtalho.appendChild(item);
-    });
-    
-    // Adiciona ao documento
-    document.body.appendChild(infoAtalho);
-    
-    // Adiciona evento para fechar ao clicar
-    infoAtalho.addEventListener('click', () => {
-        infoAtalho.remove();
-    });
+    processarProximaPalavra();
 }
 
 // Função para iniciar o teleprompter
 function iniciarTeleprompter() {
     const editor = document.getElementById('editor');
-    const velocidadeInput = document.getElementById('velocidade');
-    const iniciarBtn = document.getElementById('iniciar-teleprompter');
-    const pausarBtn = document.getElementById('pausar-teleprompter');
-    const reiniciarBtn = document.getElementById('reiniciar-teleprompter');
+    const velocidadeInput = document.getElementById('velocidade-teleprompter');
+    const iniciarBtn = document.getElementById('btn-iniciar-teleprompter');
+    const pausarBtn = document.getElementById('btn-pausar-teleprompter');
+    const reiniciarBtn = document.getElementById('btn-reiniciar-teleprompter');
     const indicador = document.getElementById('indicador-foco');
-    const contagemInput = document.getElementById('contagem');
+    const contagemInput = document.getElementById('contagem-regressiva-input');
     const destaqueToggle = document.getElementById('destaque-toggle');
     
-    if (!velocidadeInput || !editor || !iniciarBtn || !pausarBtn || !indicador || !contagemInput) return;
+    if (!velocidadeInput || !editor || !iniciarBtn || !pausarBtn || !indicador || !contagemInput) {
+        console.error('Elementos necessários não encontrados para iniciar o teleprompter');
+        return;
+    }
     
     const segundosContagem = parseInt(contagemInput.value) || 0;
     
@@ -580,7 +554,15 @@ function iniciarTeleprompter() {
         teleprompterAtivo = true;
         teleprompterPausado = false;
         
-        processarProximaPalavra();
+        // Inicia a contagem regressiva se configurada
+        const segundosContagem = parseInt(contagemInput.value) || 0;
+        if (segundosContagem > 0) {
+            mostrarContagemRegressiva(segundosContagem, () => {
+                processarProximaPalavra();
+            });
+        } else {
+            processarProximaPalavra();
+        }
     };
     
     const pausarTeleprompter = () => {
@@ -757,16 +739,23 @@ function iniciarTeleprompter() {
     });
     
     // Adiciona eventos para os botões de velocidade
-    document.getElementById('diminuir-velocidade').addEventListener('click', () => {
-        ajustarVelocidade(-1);
-    });
+    const diminuirVelocidadeBtn = document.getElementById('diminuir-velocidade');
+    const aumentarVelocidadeBtn = document.getElementById('aumentar-velocidade');
     
-    document.getElementById('aumentar-velocidade').addEventListener('click', () => {
-        ajustarVelocidade(1);
-    });
+    if (diminuirVelocidadeBtn) {
+        diminuirVelocidadeBtn.addEventListener('click', () => {
+            ajustarVelocidade(-1);
+        });
+    }
+    
+    if (aumentarVelocidadeBtn) {
+        aumentarVelocidadeBtn.addEventListener('click', () => {
+            ajustarVelocidade(1);
+        });
+    }
     
     // Adiciona evento para o botão de informações
-    const infoBtn = document.getElementById('info-teleprompter');
+    const infoBtn = document.getElementById('btn-info-teleprompter');
     if (infoBtn) {
         infoBtn.addEventListener('click', mostrarInstrucoesUso);
     }
@@ -845,9 +834,9 @@ function inicializarMenuHamburger() {
 // Inicialização dos eventos
 document.addEventListener('DOMContentLoaded', () => {
     const editor = document.getElementById('editor');
-    const iniciarTeleprompterBtn = document.getElementById('iniciar-teleprompter');
-    const pausarTeleprompterBtn = document.getElementById('pausar-teleprompter');
-    const reiniciarTeleprompterBtn = document.getElementById('reiniciar-teleprompter');
+    const iniciarTeleprompterBtn = document.getElementById('btn-iniciar-teleprompter');
+    const pausarTeleprompterBtn = document.getElementById('btn-pausar-teleprompter');
+    const reiniciarTeleprompterBtn = document.getElementById('btn-reiniciar-teleprompter');
     const transparenciaSlider = document.getElementById('transparencia-slider');
     const toolbarButtons = document.querySelectorAll('.toolbar-btn');
     const dropdownButtons = document.querySelectorAll('.toolbar-dropdown .dropdown-menu button');
@@ -923,7 +912,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Adicionar eventos de clique para os botões do teleprompter
     if (iniciarTeleprompterBtn) {
-        iniciarTeleprompterBtn.addEventListener('click', iniciarTeleprompter);
+        iniciarTeleprompterBtn.addEventListener('click', () => {
+            iniciarTeleprompter();
+        });
     }
     
     if (pausarTeleprompterBtn) {
@@ -939,7 +930,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (reiniciarTeleprompterBtn) {
-        reiniciarTeleprompterBtn.addEventListener('click', reiniciarTeleprompter);
+        reiniciarTeleprompterBtn.addEventListener('click', () => {
+            reiniciarTeleprompter();
+        });
     }
     
     // Adicionar funcionalidade para o toggle de destaque
@@ -961,7 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Adiciona evento para o botão de informações
-    const infoBtn = document.getElementById('info-teleprompter');
+    const infoBtn = document.getElementById('btn-info-teleprompter');
     if (infoBtn) {
         infoBtn.addEventListener('click', mostrarInstrucoesUso);
     }
@@ -1075,51 +1068,5 @@ document.addEventListener('keydown', (e) => {
     else if (e.altKey && e.key === '0') {
         e.preventDefault();
         aplicarZoom(1.0);
-    }
-});
-
-// Event Listeners para o Teleprompter
-document.getElementById('iniciar-teleprompter').addEventListener('click', iniciarTeleprompter);
-document.getElementById('pausar-teleprompter').addEventListener('click', pausarTeleprompter);
-document.getElementById('reiniciar-teleprompter').addEventListener('click', reiniciarTeleprompter);
-
-// Event Listeners para ajuste de velocidade
-document.getElementById('diminuir-velocidade').addEventListener('click', () => {
-    const velocidade = document.getElementById('velocidade');
-    velocidade.value = Math.max(1, parseInt(velocidade.value) - 1);
-});
-
-document.getElementById('aumentar-velocidade').addEventListener('click', () => {
-    const velocidade = document.getElementById('velocidade');
-    velocidade.value = Math.min(10, parseInt(velocidade.value) + 1);
-});
-
-// Event Listeners para teclas de atalho
-document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    
-    switch(e.code) {
-        case 'KeyP': // P para pausar/continuar
-            if (teleprompterAtivo) {
-                pausarTeleprompter();
-            } else {
-                iniciarTeleprompter();
-            }
-            e.preventDefault();
-            break;
-        case 'ArrowUp': // Seta para cima aumenta velocidade
-            const velocidade = document.getElementById('velocidade');
-            velocidade.value = Math.min(10, parseInt(velocidade.value) + 1);
-            e.preventDefault();
-            break;
-        case 'ArrowDown': // Seta para baixo diminui velocidade
-            const velocidade2 = document.getElementById('velocidade');
-            velocidade2.value = Math.max(1, parseInt(velocidade2.value) - 1);
-            e.preventDefault();
-            break;
-        case 'Home': // Home para reiniciar
-            reiniciarTeleprompter();
-            e.preventDefault();
-            break;
     }
 }); 
