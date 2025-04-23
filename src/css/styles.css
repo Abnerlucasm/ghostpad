@@ -275,6 +275,17 @@ button {
   color: var(--text-color);
   border-radius: 4px;
   transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-btn i {
+  font-size: 14px;
+}
+
+.toolbar-btn span {
+  font-size: 12px;
 }
 
 .toolbar-btn:hover {
@@ -754,19 +765,23 @@ textarea.form-control {
 
 .modo-compacto .editor-container {
   height: 100vh;
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
   border: none;
+  flex: 1;
 }
 
 .modo-compacto .editor {
-  height: calc(100vh - 40px);
+  height: 100%;
   padding: 10px;
   overflow: auto;
+  margin: 0;
 }
 
 .modo-compacto .container {
   padding: 0;
   overflow: hidden;
+  height: 100vh;
 }
 
 .modo-compacto .tox.tox-tinymce {
@@ -839,17 +854,6 @@ textarea.form-control {
   font-size: 12px;
 }
 
-/* Ajustes para o modo compacto */
-.modo-compacto .editor-container {
-  height: calc(100vh - 40px);
-  margin-top: 0;
-}
-
-.modo-compacto .editor {
-  height: 100%;
-  padding: 10px;
-}
-
 /* Footer */
 .footer {
   position: fixed;
@@ -876,6 +880,7 @@ textarea.form-control {
   text-decoration: underline;
 }
 
+/* Estilos para o dropdown de linguagens */
 .toolbar-dropdown {
   position: relative;
   display: inline-block;
@@ -884,11 +889,14 @@ textarea.form-control {
 .toolbar-dropdown .dropdown-menu {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+  background-color: var(--bg-color);
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
   padding: 5px 0;
 }
 
@@ -904,20 +912,27 @@ textarea.form-control {
   background: none;
   cursor: pointer;
   font-size: 14px;
-  color: #333;
+  color: var(--text-color);
+  transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
 .toolbar-dropdown .dropdown-menu button:hover {
-  background-color: #f1f1f1;
+  background-color: var(--hover-color);
 }
 
-.separator {
-  width: 1px;
-  height: 24px;
-  background-color: #ddd;
-  margin: 0 5px;
-  display: inline-block;
-  vertical-align: middle;
+/* Ajustes para o tema escuro */
+body.tema-escuro .toolbar-dropdown .dropdown-menu {
+  background-color: #2d2d2d;
+  border-color: #333;
+}
+
+body.tema-escuro .toolbar-dropdown .dropdown-menu button {
+  color: #e6e6e6;
+}
+
+body.tema-escuro .toolbar-dropdown .dropdown-menu button:hover {
+  background-color: #333;
 }
 
 /* Elementos que não devem ser arrastáveis */
@@ -1267,4 +1282,83 @@ button i.fab {
   display: inline-block !important;
   visibility: visible !important;
   opacity: 1 !important;
+}
+
+/* Estilos para blocos de código */
+pre[class*="language-"] {
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  border: 1px solid #e0e0e0;
+  overflow: auto;
+  position: relative;
+}
+
+pre[class*="language-"] code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  tab-size: 4;
+}
+
+/* Ajustes para o tema escuro */
+body.tema-escuro pre[class*="language-"] {
+  background-color: #2d2d2d;
+  border-color: #333;
+}
+
+/* Estilos para o dropdown de linguagens */
+.toolbar-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.toolbar-dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-color);
+  min-width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 5px 0;
+}
+
+.toolbar-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.toolbar-dropdown .dropdown-menu button {
+  width: 100%;
+  padding: 8px 16px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-color);
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.toolbar-dropdown .dropdown-menu button:hover {
+  background-color: var(--hover-color);
+}
+
+/* Ajustes para o tema escuro */
+body.tema-escuro .toolbar-dropdown .dropdown-menu {
+  background-color: #2d2d2d;
+  border-color: #333;
+}
+
+body.tema-escuro .toolbar-dropdown .dropdown-menu button {
+  color: #e6e6e6;
+}
+
+body.tema-escuro .toolbar-dropdown .dropdown-menu button:hover {
+  background-color: #333;
 } 

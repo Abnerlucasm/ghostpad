@@ -62,7 +62,9 @@ function createWindow() {
       // Configurações de segurança
       webSecurity: true,
       allowRunningInsecureContent: false,
-      experimentalFeatures: false
+      experimentalFeatures: false,
+      // Permitir DevTools em desenvolvimento
+      devTools: process.env.NODE_ENV === 'development'
     },
     // Configurações da janela
     frame: false,
@@ -194,6 +196,11 @@ function createWindow() {
       });
     }
   });
+
+  // Habilitar DevTools em desenvolvimento
+  if (process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 // Criar o template do menu

@@ -9,6 +9,10 @@
   <link rel="stylesheet" href="src/css/tema-escuro.css">
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Prism.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css">
 </head>
 <body class="tema-claro">
   <!-- Indicadores de redimensionamento -->
@@ -86,6 +90,24 @@
           <div class="separator"></div>
           <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista não ordenada"><i class="fas fa-list-ul"></i></button>
           <button class="toolbar-btn" data-command="insertOrderedList" title="Lista ordenada"><i class="fas fa-list-ol"></i></button>
+          <div class="separator"></div>
+          <div class="toolbar-dropdown">
+            <button class="toolbar-btn" title="Inserir código">
+              <i class="fas fa-code"></i> Código
+            </button>
+            <div class="dropdown-menu">
+              <button data-command="insertCode" data-value="javascript">JavaScript</button>
+              <button data-command="insertCode" data-value="python">Python</button>
+              <button data-command="insertCode" data-value="java">Java</button>
+              <button data-command="insertCode" data-value="csharp">C#</button>
+              <button data-command="insertCode" data-value="cpp">C++</button>
+              <button data-command="insertCode" data-value="php">PHP</button>
+              <button data-command="insertCode" data-value="ruby">Ruby</button>
+              <button data-command="insertCode" data-value="swift">Swift</button>
+              <button data-command="insertCode" data-value="go">Go</button>
+              <button data-command="insertCode" data-value="rust">Rust</button>
+            </div>
+          </div>
         </div>
         <div id="editor" class="editor" contenteditable="true"></div>
         <div class="status-bar" id="status-bar">Pronto</div>
@@ -163,6 +185,23 @@
   </div>
   
   <script src="src/js/renderer.js"></script>
+  
+  <!-- Prism.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-csharp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ruby.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-swift.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-rust.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <script src="src/js/code-editor.js"></script>
   
   <footer class="footer">
     <p>© 2024 GhostPad - Desenvolvido por <a href="https://github.com/abnerlucasm" target="_blank">Abner Lucas</a></p>
