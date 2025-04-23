@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 // Configurações persistentes
 const store = new Store({
-  name: "app-oculto-config",
+  name: "ghostpad-config",
   defaults: {
     temaSalvo: "sistema",
     transparencia: 1.0,
