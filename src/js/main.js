@@ -1,7 +1,11 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain, globalShortcut } = require('electron');
-const path = require('path');
-const fs = require('fs');
-const Store = require('electron-store').default;
+import { app, BrowserWindow, Menu, dialog, ipcMain, globalShortcut } from 'electron';
+import path from 'path';
+import fs from 'fs';
+import Store from 'electron-store';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configurações persistentes
 const store = new Store({
