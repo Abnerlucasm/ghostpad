@@ -33,6 +33,20 @@ body {
   position: relative;
 }
 
+/* Ajuste para janelas com altura maior que largura */
+@media (max-aspect-ratio: 1/1) {
+  .container {
+    padding: 10px;
+    padding-top: 15px;
+  }
+}
+
+/* Ajuste para modo minimizado */
+.modo-compacto .container {
+  padding: 5px;
+  padding-top: 10px;
+}
+
 /* Indicadores de redimensionamento */
 .resize-handle {
   position: absolute;
@@ -280,14 +294,30 @@ button {
 
 .editor {
   flex: 1;
-  padding: 16px;
-  overflow-y: auto;
+  padding: 10px;
+  border: none;
   outline: none;
-  line-height: 1.5;
-  font-family: Arial, sans-serif;
+  resize: none;
+  background-color: transparent;
+  color: inherit;
   font-size: 14px;
-  color: var(--text-color);
-  background-color: var(--editor-bg);
+  line-height: 1.5;
+  overflow-y: auto;
+  min-height: 200px;
+}
+
+/* Ajuste para janelas com altura maior que largura */
+@media (max-aspect-ratio: 1/1) {
+  .editor {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+/* Ajuste para modo minimizado */
+.modo-compacto .editor {
+  padding: 5px;
+  font-size: 12px;
 }
 
 .editor:focus {

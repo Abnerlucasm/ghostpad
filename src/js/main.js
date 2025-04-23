@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain, globalShortcut } = require('electron');
 const path = require('path');
 const fs = require('fs');
-const Store = require('electron-store');
+const Store = require('electron-store').default;
 
 // Configurações persistentes
 const store = new Store({
