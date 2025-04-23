@@ -37,3 +37,5 @@ desktop.ini
 *.json
 !package.json
 !package-lock.json 
+.husky/
+.husky
