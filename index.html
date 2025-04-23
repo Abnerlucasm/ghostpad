@@ -32,6 +32,21 @@
       <i class="fas fa-times"></i>
     </button>
   </div>
+  <button class="hamburger-btn">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="menu-lateral">
+    <header>
+      <h2>Menu</h2>
+    </header>
+    <ul>
+      <li><i class="fas fa-home"></i> Início</li>
+      <li><i class="fas fa-cog"></i> Configurações</li>
+      <li><i class="fas fa-info-circle"></i> Sobre</li>
+    </ul>
+  </div>
+
   <div class="container">
     <div class="header">
       <div class="projeto-info" id="projeto-info">
@@ -63,20 +78,112 @@
     
     <div class="conteudo-principal" id="conteudo-principal">
       <div class="editor-container" id="editor-container">
-        <div class="toolbar">
-          <button class="toolbar-btn" data-command="bold" title="Negrito"><i class="fas fa-bold"></i></button>
-          <button class="toolbar-btn" data-command="italic" title="Itálico"><i class="fas fa-italic"></i></button>
-          <button class="toolbar-btn" data-command="underline" title="Sublinhado"><i class="fas fa-underline"></i></button>
-          <button class="toolbar-btn" data-command="strikethrough" title="Tachado"><i class="fas fa-strikethrough"></i></button>
-          <div class="separator"></div>
-          <button class="toolbar-btn" data-command="justifyLeft" title="Alinhar à esquerda"><i class="fas fa-align-left"></i></button>
-          <button class="toolbar-btn" data-command="justifyCenter" title="Centralizar"><i class="fas fa-align-center"></i></button>
-          <button class="toolbar-btn" data-command="justifyRight" title="Alinhar à direita"><i class="fas fa-align-right"></i></button>
-          <div class="separator"></div>
-          <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista não ordenada"><i class="fas fa-list-ul"></i></button>
-          <button class="toolbar-btn" data-command="insertOrderedList" title="Lista ordenada"><i class="fas fa-list-ol"></i></button>
+        <div class="toolbar-container">
+          <button class="menu-burger" id="menu-burger" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="toolbar">
+            <button class="toolbar-btn" data-command="bold" title="Negrito"><i class="fas fa-bold"></i></button>
+            <button class="toolbar-btn" data-command="italic" title="Itálico"><i class="fas fa-italic"></i></button>
+            <button class="toolbar-btn" data-command="underline" title="Sublinhado"><i class="fas fa-underline"></i></button>
+            <button class="toolbar-btn" data-command="strikethrough" title="Tachado"><i class="fas fa-strikethrough"></i></button>
+            <div class="separator"></div>
+            
+            <div class="toolbar-dropdown">
+              <button class="toolbar-btn" title="Fonte">
+                <i class="fas fa-font"></i>
+              </button>
+              <div class="dropdown-menu" id="fonte-dropdown">
+                <button data-command="fontName" data-value="Arial">Arial</button>
+                <button data-command="fontName" data-value="Verdana">Verdana</button>
+                <button data-command="fontName" data-value="Times New Roman">Times New Roman</button>
+                <button data-command="fontName" data-value="Courier New">Courier New</button>
+                <button data-command="fontName" data-value="Georgia">Georgia</button>
+                <button data-command="fontName" data-value="Tahoma">Tahoma</button>
+                <button data-command="fontName" data-value="Trebuchet MS">Trebuchet MS</button>
+              </div>
+            </div>
+            
+            <div class="toolbar-dropdown">
+              <button class="toolbar-btn" title="Tamanho">
+                <i class="fas fa-text-height"></i>
+              </button>
+              <div class="dropdown-menu">
+                <button data-command="fontSize" data-value="1">8pt</button>
+                <button data-command="fontSize" data-value="2">10pt</button>
+                <button data-command="fontSize" data-value="3">12pt</button>
+                <button data-command="fontSize" data-value="4">14pt</button>
+                <button data-command="fontSize" data-value="5">18pt</button>
+                <button data-command="fontSize" data-value="6">24pt</button>
+                <button data-command="fontSize" data-value="7">36pt</button>
+              </div>
+            </div>
+            
+            <div class="separator"></div>
+            <button class="toolbar-btn" data-command="justifyLeft" title="Alinhar à esquerda"><i class="fas fa-align-left"></i></button>
+            <button class="toolbar-btn" data-command="justifyCenter" title="Centralizar"><i class="fas fa-align-center"></i></button>
+            <button class="toolbar-btn" data-command="justifyRight" title="Alinhar à direita"><i class="fas fa-align-right"></i></button>
+            <div class="separator"></div>
+            <button class="toolbar-btn" data-command="removeFormat" title="Limpar formatação"><i class="fas fa-remove-format"></i></button>
+            <div class="separator"></div>
+            <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista não ordenada"><i class="fas fa-list-ul"></i></button>
+            <button class="toolbar-btn" data-command="insertOrderedList" title="Lista ordenada"><i class="fas fa-list-ol"></i></button>
+            <div class="separator"></div>
+            <div class="toolbar-dropdown">
+              <button class="toolbar-btn" title="Títulos">
+                <i class="fas fa-heading"></i>
+              </button>
+              <div class="dropdown-menu">
+                <button data-command="formatBlock" data-value="h1">Título 1</button>
+                <button data-command="formatBlock" data-value="h2">Título 2</button>
+                <button data-command="formatBlock" data-value="h3">Título 3</button>
+              </div>
+            </div>
+            <div class="separator"></div>
+            <div class="teleprompter-controls">
+              <div class="controle-grupo">
+                <div class="controle-velocidade">
+                  <i class="fas fa-tachometer-alt" title="Velocidade"></i>
+                  <input type="number" id="velocidade-teleprompter" min="0.25" max="10" step="any" value="5" title="Velocidade">
+                </div>
+                <div class="controle-contagem">
+                  <i class="fas fa-clock" title="Contagem regressiva em segundos"></i>
+                  <input type="number" id="contagem-regressiva-input" min="0" max="10" value="0" title="Contagem regressiva em segundos">
+                </div>
+                <div class="controle-destaque">
+                  <label class="toggle-switch" title="Ativar/desativar destaque">
+                    <input type="checkbox" id="destaque-toggle" checked>
+                    <span class="toggle-slider">
+                      <i class="fas fa-highlighter toggle-icon ativo"></i>
+                      <i class="fas fa-ban toggle-icon inativo"></i>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <div class="controle-botoes">
+                <button class="toolbar-btn btn-teleprompter" id="btn-iniciar-teleprompter" title="Iniciar teleprompter">
+                  <i class="fas fa-play"></i>
+                </button>
+                <button class="toolbar-btn btn-teleprompter" id="btn-pausar-teleprompter" title="Pausar teleprompter" style="display: none;">
+                  <i class="fas fa-pause"></i>
+                </button>
+                <button class="toolbar-btn" id="btn-reiniciar-teleprompter" title="Reiniciar teleprompter" style="display: none;">
+                  <i class="fas fa-undo"></i>
+                </button>
+                <button class="toolbar-btn" id="btn-info-teleprompter" title="Atalhos de teclado">
+                  <i class="fas fa-keyboard"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="indicador-leitura">
+          <div class="linha-atual"></div>
         </div>
         <div id="editor" class="editor" contenteditable="true"></div>
+        <div class="marcador-texto" id="marcador-texto"></div>
+        <div class="indicador-foco" id="indicador-foco"></div>
+        <div class="contagem-regressiva" id="contagem-regressiva">3</div>
         <div class="status-bar" id="status-bar">Pronto</div>
       </div>
       
@@ -141,9 +248,7 @@
   </div>
   
   <script src="src/js/renderer.js"></script>
-  
-  <footer class="footer">
-    <p>© 2024 GhostPad - Desenvolvido por <a href="https://github.com/abnerlucasm" target="_blank">Abner Lucas</a></p>
-  </footer>
+  <script src="src/js/editor.js"></script>
+  <script src="src/js/menu.js"></script>
 </body>
 </html> 

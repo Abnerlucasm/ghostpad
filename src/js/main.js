@@ -48,6 +48,8 @@ let projetoModificado = false;
 
 // Função para criar a janela principal
 function createWindow() {
+  const isDevMode = process.env.NODE_ENV === 'development' || process.argv.includes('--dev');
+  
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -64,7 +66,7 @@ function createWindow() {
       allowRunningInsecureContent: false,
       experimentalFeatures: false,
       // Permitir DevTools em desenvolvimento
-      devTools: process.env.NODE_ENV === 'development'
+      devTools: isDevMode
     },
     // Configurações da janela
     frame: false,
@@ -198,8 +200,16 @@ function createWindow() {
   });
 
   // Habilitar DevTools em desenvolvimento
-  if (process.env.NODE_ENV === 'development') {
+  if (isDevMode) {
     mainWindow.webContents.openDevTools();
+    
+    // Adiciona handler para F12 para alternar DevTools
+    mainWindow.webContents.on('before-input-event', (event, input) => {
+      if (input.key === 'F12') {
+        mainWindow.webContents.toggleDevTools();
+        event.preventDefault();
+      }
+    });
   }
 }
 
@@ -642,6 +652,15 @@ app.whenReady().then(() => {
     // ícone da dock é clicado e não existem outras janelas abertas.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+
+  // Adicionar manipulador de atalho para F12 em modo de desenvolvimento
+  if (process.env.NODE_ENV === 'development' || process.argv.includes('--dev')) {
+    globalShortcut.register('F12', () => {
+      if (mainWindow && mainWindow.webContents) {
+        mainWindow.webContents.toggleDevTools();
+      }
+    });
+  }
 });
 
 // Sai quando todas as janelas forem fechadas, exceto no macOS
