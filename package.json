@@ -99,6 +99,6 @@
       "allowToChangeInstallationDirectory": true,
       "artifactName": "${productName}-${version}-setup.${ext}"
     },
-    "afterPack": "./scripts/optimize-after-pack.js"
+    "afterPack": "./scripts/optimize-after-pack.cjs"
   }
 }
