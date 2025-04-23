@@ -10,7 +10,15 @@
     "start": "electron .",
     "dev": "electron . --dev",
     "build": "electron-builder",
-    "build:optimized": "node scripts/optimize-before-build.js && electron-builder --config electron-builder-optimized.json"
+    "build:optimized": "node scripts/optimize-before-build.js && electron-builder --config electron-builder-optimized.json",
+    "prepare": "husky",
+    "commit": "npx git-cz",
+    "release": "standard-version"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "keywords": [
     "electron",
@@ -21,11 +29,19 @@
   ],
   "license": "ISC",
   "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "electron": "^35.2.0",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.0.12",
+    "husky": "^9.1.7",
+    "standard-version": "^9.5.0"
   },
   "dependencies": {
-    "electron-store": "^10.0.1"
+    "commitlint": "^19.8.0",
+    "electron-store": "^10.0.1",
+    "prettier": "^3.5.3"
   },
   "build": {
     "appId": "com.ghostpad.app",
