@@ -119,19 +119,22 @@ function mostrarContagemRegressiva(segundos, callback) {
     const contagem = document.getElementById('contagem-regressiva');
     if (!contagem) return;
     
-    contagem.textContent = segundos;
-    contagem.classList.add('ativo');
+    let contagemAtual = segundos;
     
-    if (segundos > 0) {
-        setTimeout(() => {
-            mostrarContagemRegressiva(segundos - 1, callback);
-        }, 1000);
-    } else {
-        setTimeout(() => {
+    const atualizarContagem = () => {
+        if (contagemAtual >= 0) {
+            contagem.textContent = contagemAtual;
+            contagem.classList.add('ativo');
+            contagemAtual--;
+            setTimeout(atualizarContagem, 1000);
+        } else {
             contagem.classList.remove('ativo');
+            contagem.textContent = '';
             if (callback) callback();
-        }, 1000);
-    }
+        }
+    };
+    
+    atualizarContagem();
 }
 
 function mostrarInstrucoesUso() {
@@ -149,7 +152,11 @@ function mostrarInstrucoesUso() {
         { tecla: '↑', descricao: 'Aumentar velocidade' },
         { tecla: '↓', descricao: 'Diminuir velocidade' },
         { tecla: 'Home', descricao: 'Reiniciar leitura' },
-        { tecla: 'ESC', descricao: 'Parar teleprompter' }
+        { tecla: 'ESC', descricao: 'Parar teleprompter' },
+        { tecla: 'Alt + T', descricao: 'Alternar opacidade (100%/50%)' },
+        { tecla: 'Alt + ]', descricao: 'Aumentar opacidade' },
+        { tecla: 'Alt + [', descricao: 'Diminuir opacidade' },
+        { tecla: 'Alt + Space', descricao: 'Iniciar teleprompter' }
     ];
     
     atalhos.forEach(atalho => {
@@ -368,6 +375,7 @@ function iniciarTeleprompter() {
     const indicador = document.getElementById('indicador-foco');
     const contagemInput = document.getElementById('contagem-regressiva-input');
     const destaqueToggle = document.getElementById('destaque-toggle');
+    const transparenciaSlider = document.getElementById('transparencia-slider');
     
     if (!velocidadeInput || !editor || !iniciarBtn || !pausarBtn || !indicador || !contagemInput) {
         console.error('Elementos necessários não encontrados para iniciar o teleprompter');
@@ -555,7 +563,6 @@ function iniciarTeleprompter() {
         teleprompterPausado = false;
         
         // Inicia a contagem regressiva se configurada
-        const segundosContagem = parseInt(contagemInput.value) || 0;
         if (segundosContagem > 0) {
             mostrarContagemRegressiva(segundosContagem, () => {
                 processarProximaPalavra();
@@ -735,6 +742,73 @@ function iniciarTeleprompter() {
                     e.preventDefault();
                 }
                 break;
+            case 'KeyT':
+                if (e.altKey) {
+                    e.preventDefault();
+                    if (transparenciaSlider) {
+                        const valorAtual = parseFloat(transparenciaSlider.value);
+                        const novoValor = valorAtual === 1.0 ? 0.5 : 1.0;
+                        transparenciaSlider.value = novoValor;
+                        const container = document.querySelector('.container');
+                        if (container) {
+                            container.style.opacity = novoValor;
+                            if (novoValor < 1) {
+                                container.style.backgroundColor = 'transparent';
+                                document.body.style.backgroundColor = 'transparent';
+                            } else {
+                                container.style.backgroundColor = '';
+                                document.body.style.backgroundColor = '';
+                            }
+                        }
+                    }
+                }
+                break;
+            case 'BracketRight':
+                if (e.altKey && transparenciaSlider) {
+                    e.preventDefault();
+                    const valorAtual = parseFloat(transparenciaSlider.value);
+                    const novoValor = Math.min(1.0, valorAtual + 0.1);
+                    transparenciaSlider.value = novoValor;
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.style.opacity = novoValor;
+                        if (novoValor < 1) {
+                            container.style.backgroundColor = 'transparent';
+                            document.body.style.backgroundColor = 'transparent';
+                        } else {
+                            container.style.backgroundColor = '';
+                            document.body.style.backgroundColor = '';
+                        }
+                    }
+                }
+                break;
+            case 'BracketLeft':
+                if (e.altKey && transparenciaSlider) {
+                    e.preventDefault();
+                    const valorAtual = parseFloat(transparenciaSlider.value);
+                    const novoValor = Math.max(0.2, valorAtual - 0.1);
+                    transparenciaSlider.value = novoValor;
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.style.opacity = novoValor;
+                        if (novoValor < 1) {
+                            container.style.backgroundColor = 'transparent';
+                            document.body.style.backgroundColor = 'transparent';
+                        } else {
+                            container.style.backgroundColor = '';
+                            document.body.style.backgroundColor = '';
+                        }
+                    }
+                }
+                break;
+            case 'Space':
+                if (e.altKey) {
+                    e.preventDefault();
+                    if (!teleprompterAtivo) {
+                        iniciarScroll();
+                    }
+                }
+                break;
         }
     });
     
@@ -757,7 +831,9 @@ function iniciarTeleprompter() {
     // Adiciona evento para o botão de informações
     const infoBtn = document.getElementById('btn-info-teleprompter');
     if (infoBtn) {
-        infoBtn.addEventListener('click', mostrarInstrucoesUso);
+        infoBtn.addEventListener('click', () => {
+            mostrarInstrucoesUso();
+        });
     }
     
     // Adiciona evento para o botão de reiniciar
@@ -956,7 +1032,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adiciona evento para o botão de informações
     const infoBtn = document.getElementById('btn-info-teleprompter');
     if (infoBtn) {
-        infoBtn.addEventListener('click', mostrarInstrucoesUso);
+        infoBtn.addEventListener('click', () => {
+            mostrarInstrucoesUso();
+        });
     }
     
     // Inicializa o menu hamburger

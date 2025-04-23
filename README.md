@@ -44,6 +44,14 @@ Um aplicativo desktop Electron que permite criar e editar textos de forma oculta
 - `Ctrl/Cmd + I` - Itálico
 - `Ctrl/Cmd + U` - Sublinhado
 - `Ctrl/Cmd + Shift + Space` - Restaurar foco da aplicação
+- `Alt + T` - Alternar entre opacidade total (100%) e parcial (50%)
+- `Alt + [` - Diminuir opacidade em 10%
+- `Alt + ]` - Aumentar opacidade em 10%
+- `Alt + Space` - Iniciar teleprompter
+- `P` - Pausar/Continuar teleprompter
+- `↑` - Aumentar velocidade do teleprompter
+- `↓` - Diminuir velocidade do teleprompter
+- `Home` - Reiniciar teleprompter
 
 ### Segurança
 - O aplicativo é invisível para:
