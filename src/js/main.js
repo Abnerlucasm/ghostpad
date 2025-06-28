@@ -10,33 +10,27 @@ import path from "path";
 import fs from "fs";
 import Store from "electron-store";
 import { fileURLToPath } from "url";
+import UpdateServiceModal from "./update-service-modal.js";
+import { PROJECT_CONFIG } from "./app-config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Configurações persistentes
+// Configurações persistentes usando configurações centralizadas
 const store = new Store({
   name: "ghostpad-config",
-  defaults: {
-    temaSalvo: "sistema",
-    transparencia: 1.0,
-    projetosRecentes: [],
-    sempreNoTopo: false,
-  },
+  defaults: PROJECT_CONFIG.storeDefaults,
 });
 
-// Configurações da aplicação
+// Configurações da aplicação (usando configurações centralizadas)
 const APP_CONFIG = {
-  MAX_PROJETOS_RECENTES: 10,
-  DEFAULT_WINDOW_WIDTH: 1000,
-  DEFAULT_WINDOW_HEIGHT: 800,
+  MAX_PROJETOS_RECENTES: PROJECT_CONFIG.maxRecentProjects,
 };
 
-// Configuração do diretório de projetos
+// Configuração do diretório de projetos usando configurações centralizadas
 const PROJETOS_DIR = path.join(
   app.getPath("documents"),
-  "Ghostpad",
-  "Projetos",
+  PROJECT_CONFIG.defaultDirectory,
 );
 
 // Garantir que o diretório existe
@@ -60,6 +54,7 @@ let mainWindow;
 let projetoAtual = null;
 let conteudoAtual = "";
 let projetoModificado = false;
+let updateService;
 
 // Função para criar a janela principal
 function createWindow() {
@@ -370,13 +365,82 @@ function criarMenuTemplate() {
       label: "Ajuda",
       submenu: [
         {
-          label: "Sobre o App Oculto",
+          label: "Verificar Atualizações",
+          click: async () => {
+            if (updateService) {
+              try {
+                await updateService.checkForUpdates(true);
+              } catch (error) {
+                console.error("Erro ao verificar atualizações:", error);
+                dialog.showErrorBox(
+                  "Erro",
+                  "Não foi possível verificar atualizações. Verifique sua conexão com a internet."
+                );
+              }
+            } else {
+              dialog.showErrorBox(
+                "Erro",
+                "Serviço de atualização não está disponível."
+              );
+            }
+          },
+        },
+        {
+          label: "Configurações de Atualização",
+          click: async () => {
+            if (!updateService) {
+              dialog.showErrorBox(
+                "Erro",
+                "Serviço de atualização não está disponível."
+              );
+              return;
+            }
+
+            try {
+              const autoUpdateCheck = store.get("autoUpdateCheck", true);
+              const status = updateService.getStatus();
+
+              const response = await dialog.showMessageBox(mainWindow, {
+                type: 'question',
+                title: 'Configurações de Atualização',
+                message: 'Configurações do Sistema de Atualização',
+                detail: `Verificação automática: ${autoUpdateCheck ? 'Habilitada' : 'Desabilitada'}\nVersão atual: ${status.currentVersion}\nÚltima verificação: ${status.lastCheck ? new Date(status.lastCheck).toLocaleString() : 'Nunca'}\n\nDeseja ${autoUpdateCheck ? 'desabilitar' : 'habilitar'} a verificação automática?`,
+                buttons: [autoUpdateCheck ? 'Desabilitar' : 'Habilitar', 'Cancelar'],
+                defaultId: 1,
+                cancelId: 1
+              });
+
+              if (response.response === 0) {
+                const newSetting = !autoUpdateCheck;
+                updateService.setAutoCheck(newSetting);
+                store.set("autoUpdateCheck", newSetting);
+
+                dialog.showMessageBox(mainWindow, {
+                  type: 'info',
+                  title: 'Configuração Atualizada',
+                  message: `Verificação automática ${newSetting ? 'habilitada' : 'desabilitada'} com sucesso!`,
+                  buttons: ['OK']
+                });
+              }
+            } catch (error) {
+              console.error("Erro ao configurar atualizações:", error);
+              dialog.showErrorBox(
+                "Erro",
+                "Não foi possível alterar as configurações de atualização."
+              );
+            }
+          },
+        },
+        { type: "separator" },
+        {
+          label: "Sobre o GhostPad",
           click: () => {
+            const status = updateService ? updateService.getStatus() : { currentVersion: "1.2.1" };
             dialog.showMessageBox({
-              title: "Sobre o App Oculto",
-              message: "App Oculto v1.0.0",
+              title: "Sobre o GhostPad",
+              message: `GhostPad v${status.currentVersion}`,
               detail:
-                "Um editor de texto discreto que se oculta de gravações de tela e ferramentas de compartilhamento.",
+                "Um editor de texto discreto que se oculta de gravações de tela e ferramentas de compartilhamento.\n\nDesenvolvido por Abner Lucas\nSistema de atualização integrado via GitHub",
               buttons: ["OK"],
             });
           },
@@ -679,6 +743,25 @@ function ajustarTransparencia(valor) {
 app.whenReady().then(() => {
   createWindow();
 
+  // ==================== INICIALIZAÇÃO DO UPDATE SERVICE ====================
+  
+  // Inicializa o serviço de atualização usando configurações centralizadas
+  try {
+    updateService = new UpdateServiceModal();
+    updateService.setMainWindow(mainWindow);
+
+    // Verifica se a verificação automática está habilitada
+    const autoUpdateCheck = store.get("autoUpdateCheck", PROJECT_CONFIG.storeDefaults.autoUpdateCheck);
+    updateService.setAutoCheck(autoUpdateCheck);
+
+    console.log('✅ UpdateService inicializado com sucesso');
+    console.log(`📋 Configurado para: ${updateService.owner}/${updateService.repo}`);
+  } catch (error) {
+    console.error('❌ Erro ao inicializar UpdateService:', error);
+  }
+
+  // ==================== FIM DA INICIALIZAÇÃO DO UPDATE SERVICE ====================
+
   // Cria o menu da aplicação
   const menuTemplate = criarMenuTemplate();
   const menu = Menu.buildFromTemplate(menuTemplate);
@@ -809,6 +892,93 @@ ipcMain.on("solicitar-conteudo", (event) => {
   );
 });
 
+// ==================== IPC HANDLERS PARA INFORMAÇÕES DA APLICAÇÃO ====================
+
+// Handler para obter versão da aplicação
+ipcMain.handle('get-app-version', async () => {
+  return app.getVersion();
+});
+
+// Handler para obter informações da aplicação
+ipcMain.handle('get-app-info', async () => {
+  const { APP_INFO } = await import('./app-config.js');
+  return APP_INFO;
+});
+
+// Handler para mostrar diálogo "Sobre" (agora usando modal customizado)
+ipcMain.handle('show-about', async () => {
+  // Instrui o renderer para abrir o modal customizado
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send('show-about-modal');
+  }
+});
+
+// ==================== IPC HANDLERS DO UPDATE SERVICE ====================
+
+// Handler para verificar atualizações manualmente
+ipcMain.handle("check-for-updates", async (event, showDialog = true) => {
+  if (!updateService) {
+    console.error("UpdateService não está inicializado");
+    return { success: false, error: "Serviço de atualização não disponível" };
+  }
+
+  try {
+    const hasUpdate = await updateService.checkForUpdates(showDialog);
+    const status = updateService.getStatus();
+    return { success: true, hasUpdate, status };
+  } catch (error) {
+    console.error("Erro ao verificar atualizações:", error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Handler para obter o status atual das atualizações
+ipcMain.handle("get-update-status", async () => {
+  if (!updateService) {
+    return { success: false, error: "Serviço de atualização não disponível" };
+  }
+
+  try {
+    const status = updateService.getStatus();
+    return { success: true, status };
+  } catch (error) {
+    console.error("Erro ao obter status de atualização:", error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Handler para configurar verificação automática
+ipcMain.handle("set-auto-update-check", async (event, enabled) => {
+  if (!updateService) {
+    return { success: false, error: "Serviço de atualização não disponível" };
+  }
+
+  try {
+    updateService.setAutoCheck(enabled);
+    
+    // Salva a preferência
+    store.set("autoUpdateCheck", enabled);
+    
+    return { success: true, enabled };
+  } catch (error) {
+    console.error("Erro ao configurar verificação automática:", error);
+    return { success: false, error: error.message };
+  }
+});
+
+// Handler para obter configuração de verificação automática
+ipcMain.handle("get-auto-update-setting", async () => {
+  try {
+    const autoUpdateCheck = store.get("autoUpdateCheck", true);
+    return { success: true, enabled: autoUpdateCheck };
+  } catch (error) {
+    console.error("Erro ao obter configuração de atualização:", error);
+    return { success: false, error: error.message };
+  }
+});
+
+// ==================== FIM DOS IPC HANDLERS DO UPDATE SERVICE ====================
+
 // Eventos IPC
 ipcMain.on("verificar-arquivo", (event, caminhoArquivo) => {
   try {
@@ -885,6 +1055,25 @@ ipcMain.on("alternar-sempre-topo", (event, valor) => {
   if (mainWindow) {
     mainWindow.setAlwaysOnTop(valor);
     store.set("sempreNoTopo", valor);
+  }
+});
+
+// Handler para criar novo projeto
+ipcMain.handle('criar-novo-projeto', async (event, dadosProjeto) => {
+  try {
+    // Reutiliza a função existente criarNovoProjeto
+    return new Promise((resolve, reject) => {
+      criarNovoProjeto(dadosProjeto, (erro, resultado) => {
+        if (erro) {
+          reject(erro);
+        } else {
+          resolve(resultado);
+        }
+      });
+    });
+  } catch (error) {
+    console.error('Erro ao criar projeto:', error);
+    throw error;
   }
 });
 

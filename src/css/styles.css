@@ -903,6 +903,274 @@ textarea.form-control {
   text-align: right;
 }
 
+/* Estilos específicos para diferentes tipos de modal */
+.modal-info .modal-header {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+}
+
+.modal-update .modal-header {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+  color: white;
+}
+
+.modal-error .modal-header {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.modal-config .modal-header {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  color: white;
+}
+
+.modal-confirm .modal-header {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+  color: white;
+}
+
+.modal-progress .modal-header {
+  background: linear-gradient(135deg, #16a085, #1abc9c);
+  color: white;
+}
+
+/* Conteúdo do modal Sobre */
+.about-content {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.about-logo {
+  flex-shrink: 0;
+}
+
+.modal-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+}
+
+.about-info h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.version-info {
+  font-size: 16px;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+.about-details {
+  margin-top: 15px;
+}
+
+.about-details p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.about-details a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.about-details a:hover {
+  text-decoration: underline;
+}
+
+/* Conteúdo do modal de atualização */
+.update-content {
+  text-align: center;
+}
+
+.update-message {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.version-comparison {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.version-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.version-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #6c757d;
+  font-weight: 600;
+}
+
+.version-current {
+  font-size: 18px;
+  font-weight: bold;
+  color: #6c757d;
+}
+
+.version-new {
+  font-size: 18px;
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.update-description {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Barra de progresso */
+.progress-content {
+  text-align: center;
+}
+
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 20px;
+  background: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #28a745, #20c997);
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 10px;
+}
+
+.progress-text {
+  font-weight: bold;
+  color: #495057;
+  min-width: 40px;
+}
+
+.download-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 10px;
+}
+
+/* Modal de erro */
+.error-content {
+  color: #721c24;
+}
+
+.error-details {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+.error-details pre {
+  font-size: 12px;
+  color: #495057;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Modal de configuração */
+.config-content {
+  color: #856404;
+}
+
+.config-example {
+  margin-top: 15px;
+  padding: 15px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+.config-example pre {
+  font-size: 12px;
+  color: #495057;
+  margin-top: 5px;
+}
+
+/* Modal sem atualização */
+.no-update-content {
+  text-align: center;
+}
+
+.current-version {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Modal de confirmação */
+.confirm-content {
+  text-align: center;
+}
+
+.confirm-details {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+/* Botões específicos */
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+/* Responsividade para modais */
+@media (max-width: 768px) {
+  .about-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .version-comparison {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .modal {
+    width: 95vw;
+    max-width: none;
+    margin: 10px;
+  }
+}
+
 /* Tela de boas-vindas */
 .bem-vindo {
   text-align: center;
@@ -1653,7 +1921,45 @@ body.tema-escuro .info-atalho kbd {
   cursor: pointer;
 }
 
-/* Estilos do menu lateral */
+/* Estilos base do menu lateral */
+
+.menu-footer {
+  margin-top: auto;
+  padding: 10px 15px;
+  border-top: 1px solid var(--border-color);
+  -webkit-app-region: no-drag;
+}
+
+.versao-app {
+  text-align: center;
+  opacity: 0.7;
+  font-size: 0.8em;
+  -webkit-app-region: no-drag;
+}
+
+.versao-app small {
+  color: var(--text-color);
+  -webkit-app-region: no-drag; 
+}
+
+/* Barra de status atualizada */
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--border-color);
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.versao-status {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+
+/* Menu lateral principal */
 .menu-lateral {
   position: fixed;
   left: -250px;
@@ -1663,8 +1969,12 @@ body.tema-escuro .info-atalho kbd {
   background-color: #2c3e50;
   transition: left 0.3s ease;
   z-index: 1000;
+  -webkit-app-region: no-drag;
+  display: flex;
+  flex-direction: column;
 }
 
+.menu-lateral.active,
 .menu-lateral.menu-aberto {
   left: 0;
 }
@@ -1673,19 +1983,24 @@ body.tema-escuro .info-atalho kbd {
   padding: 20px;
   color: white;
   border-bottom: 1px solid #34495e;
+  -webkit-app-region: no-drag;
 }
 
 .menu-lateral ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  -webkit-app-region: no-drag;
+  flex-grow: 1;
 }
 
 .menu-lateral li {
   padding: 15px 20px;
   color: #ecf0f1;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.2s;
+  -webkit-app-region: no-drag;
+  user-select: none;
 }
 
 .menu-lateral li:hover {
@@ -1706,6 +2021,7 @@ body.tema-escuro .info-atalho kbd {
   font-size: 24px;
   cursor: pointer;
   z-index: 1001;
+  -webkit-app-region: no-drag;
 }
 
 /* Conteúdo do Menu */
