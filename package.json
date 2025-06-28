@@ -1,6 +1,6 @@
 {
   "name": "ghostpad",
-  "version": "1.2.1",
+  "version": "1.0.4",
   "description": "Aplicativo oculto que permite armazenar texto em JSON e gerenciar projetos",
   "main": "src/js/main.js",
   "type": "module",
@@ -43,7 +43,8 @@
   "dependencies": {
     "commitlint": "^19.8.0",
     "electron-store": "^10.0.1",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "semver": "^7.7.2"
   },
   "lint-staged": {
     "*.js": [

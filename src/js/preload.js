@@ -95,4 +95,91 @@ contextBridge.exposeInMainWorld('electron', {
   maximizeWindow: () => ipcRenderer.send('maximize-window'),
   closeWindow: () => ipcRenderer.send('close-window'),
   startResize: (direction) => ipcRenderer.send('start-resize', direction),
+
+  // ==================== UPDATE SERVICE APIs ====================
+  
+  // Verificar atualizações manualmente
+  checkForUpdates: async (showDialog = true) => {
+    try {
+      return await ipcRenderer.invoke('check-for-updates', showDialog);
+    } catch (error) {
+      console.error('Erro ao verificar atualizações via preload:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Obter status das atualizações
+  getUpdateStatus: async () => {
+    try {
+      return await ipcRenderer.invoke('get-update-status');
+    } catch (error) {
+      console.error('Erro ao obter status de atualização via preload:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Configurar verificação automática
+  setAutoUpdateCheck: async (enabled) => {
+    try {
+      return await ipcRenderer.invoke('set-auto-update-check', enabled);
+    } catch (error) {
+      console.error('Erro ao configurar verificação automática via preload:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // Obter configuração de verificação automática
+  getAutoUpdateSetting: async () => {
+    try {
+      return await ipcRenderer.invoke('get-auto-update-setting');
+    } catch (error) {
+      console.error('Erro ao obter configuração de atualização via preload:', error);
+      return { success: false, error: error.message };
+    }
+  },
+
+  // ==================== FIM DAS UPDATE SERVICE APIs ====================
+
+  // Informações da aplicação
+  getAppVersion: async () => {
+    try {
+      return await ipcRenderer.invoke('get-app-version');
+    } catch (error) {
+      console.error('Erro ao obter versão da aplicação:', error);
+      return 'N/A';
+    }
+  },
+
+  getAppInfo: async () => {
+    try {
+      return await ipcRenderer.invoke('get-app-info');
+    } catch (error) {
+      console.error('Erro ao obter informações da aplicação:', error);
+      return {};
+    }
+  },
+
+  showAbout: async () => {
+    try {
+      return await ipcRenderer.invoke('show-about');
+    } catch (error) {
+      console.error('Erro ao mostrar sobre:', error);
+    }
+  },
+
+  // API para criação de projetos
+  criarNovoProjetoModal: async (dadosProjeto) => {
+    try {
+      return await ipcRenderer.invoke('criar-novo-projeto', dadosProjeto);
+    } catch (error) {
+      console.error('Erro ao criar projeto:', error);
+      throw error;
+    }
+  },
+
+  // Eventos de modais
+  onShowAboutModal: (callback) => {
+    ipcRenderer.removeAllListeners('show-about-modal');
+    ipcRenderer.on('show-about-modal', callback);
+  },
 }); 

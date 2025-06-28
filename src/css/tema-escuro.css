@@ -831,4 +831,29 @@ body.tema-escuro .modo-compacto .aviso-sair kbd {
   border-color: #333;
   color: #e6e6e6;
   box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+/* Estilos específicos do menu lateral para tema escuro */
+body.tema-escuro .menu-lateral li:hover {
+  background-color: #333;
+  color: #ffffff;
+}
+
+body.tema-escuro .menu-footer {
+  border-top-color: #333;
+}
+
+body.tema-escuro .versao-app small {
+  color: #888;
+}
+
+body.tema-escuro .status-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.tema-escuro .versao-status {
+  opacity: 0.7;
+  font-size: 0.8em;
 } 

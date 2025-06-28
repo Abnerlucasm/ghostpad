@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="src/css/styles.css">
   <link rel="stylesheet" href="src/css/tema-claro.css">
   <link rel="stylesheet" href="src/css/tema-escuro.css">
+  <link rel="stylesheet" href="src/css/update-ui.css">
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -41,10 +42,16 @@
       <h2>Menu</h2>
     </header>
     <ul>
-      <li><i class="fas fa-home"></i> Início</li>
-      <li><i class="fas fa-cog"></i> Configurações</li>
-      <li><i class="fas fa-info-circle"></i> Sobre</li>
+      <li id="menu-inicio"><i class="fas fa-home"></i> Início</li>
+                  <li id="menu-verificar-atualizacoes"><i class="fas fa-download"></i> Verificar Atualizações</li>
+      <li id="menu-configuracoes"><i class="fas fa-cog"></i> Configurações</li>
+      <li id="menu-sobre"><i class="fas fa-info-circle"></i> Sobre</li>
     </ul>
+    <div class="menu-footer">
+      <div class="versao-app">
+        <small>GhostPad v<span id="app-version">...</span></small>
+      </div>
+    </div>
   </div>
 
   <div class="container">
@@ -184,7 +191,10 @@
         <div class="marcador-texto" id="marcador-texto"></div>
         <div class="indicador-foco" id="indicador-foco"></div>
         <div class="contagem-regressiva" id="contagem-regressiva">3</div>
-        <div class="status-bar" id="status-bar">Pronto</div>
+        <div class="status-bar" id="status-bar">
+          <span>Pronto</span>
+          <span class="versao-status">GhostPad v<span id="app-version-status">...</span></span>
+        </div>
       </div>
       
       <div class="painel-lateral" id="painel-lateral">
@@ -221,6 +231,8 @@
   
   <div class="notification" id="notification">Projeto salvo com sucesso!</div>
   
+  <!-- Modais do Sistema -->
+  
   <!-- Modal para novo projeto -->
   <div class="modal-overlay" id="modal-novo-projeto">
     <div class="modal">
@@ -246,9 +258,193 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal Sobre -->
+  <div class="modal-overlay" id="modal-sobre">
+    <div class="modal modal-info">
+      <div class="modal-header">
+        <h2><i class="fas fa-info-circle"></i> Sobre o GhostPad</h2>
+        <button type="button" class="close-button" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="about-content">
+          <div class="about-logo">
+            <img src="src/images/logo.png" alt="GhostPad" class="modal-logo">
+          </div>
+          <div class="about-info">
+            <h3 id="about-app-name">GhostPad</h3>
+            <p class="version-info">Versão <span id="about-version">...</span></p>
+            <p id="about-description">Editor de texto seguro e protegido</p>
+            <div class="about-details">
+              <p><strong>Autor:</strong> <span id="about-author">...</span></p>
+              <p><strong>Website:</strong> <a href="#" id="about-website" target="_blank">...</a></p>
+              <p><strong>Copyright:</strong> <span id="about-copyright">...</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-modal-close>OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Atualização Disponível -->
+  <div class="modal-overlay" id="modal-update-available">
+    <div class="modal modal-update">
+      <div class="modal-header">
+        <h2><i class="fas fa-download"></i> Atualização Disponível</h2>
+        <button type="button" class="close-button" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="update-content">
+          <div class="update-info">
+            <p class="update-message">
+              Uma nova versão do GhostPad está disponível!
+            </p>
+            <div class="version-comparison">
+              <div class="version-item">
+                <span class="version-label">Versão Atual:</span>
+                <span class="version-current" id="update-current-version">...</span>
+              </div>
+              <div class="version-item">
+                <span class="version-label">Nova Versão:</span>
+                <span class="version-new" id="update-new-version">...</span>
+              </div>
+            </div>
+            <div class="update-description">
+              <p id="update-release-notes">Confira as novidades na nova versão.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Mais Tarde</button>
+        <button type="button" class="btn btn-primary" id="btn-download-update">Atualizar Agora</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Progresso de Download -->
+  <div class="modal-overlay" id="modal-download-progress">
+    <div class="modal modal-progress">
+      <div class="modal-header">
+        <h2><i class="fas fa-download"></i> Baixando Atualização</h2>
+      </div>
+      <div class="modal-body">
+        <div class="progress-content">
+          <p id="download-status">Preparando download...</p>
+          <div class="progress-bar-container">
+            <div class="progress-bar">
+              <div class="progress-fill" id="download-progress-fill"></div>
+            </div>
+            <span class="progress-text" id="download-progress-text">0%</span>
+          </div>
+          <div class="download-details">
+            <span id="download-speed">...</span>
+            <span id="download-eta">...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Sem Atualização -->
+  <div class="modal-overlay" id="modal-no-update">
+    <div class="modal modal-info">
+      <div class="modal-header">
+        <h2><i class="fas fa-check-circle"></i> Sem Atualizações</h2>
+        <button type="button" class="close-button" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="no-update-content">
+          <p>Você já está usando a versão mais recente do GhostPad!</p>
+          <p class="current-version">Versão atual: <strong id="no-update-version">...</strong></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-modal-close>OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Erro -->
+  <div class="modal-overlay" id="modal-error">
+    <div class="modal modal-error">
+      <div class="modal-header">
+        <h2><i class="fas fa-exclamation-triangle"></i> <span id="error-title">Erro</span></h2>
+        <button type="button" class="close-button" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="error-content">
+          <p id="error-message">Ocorreu um erro inesperado.</p>
+          <div class="error-details" id="error-details" style="display: none;">
+            <p><strong>Detalhes técnicos:</strong></p>
+            <pre id="error-stack"></pre>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-show-error-details">Mostrar Detalhes</button>
+        <button type="button" class="btn btn-primary" data-modal-close>OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Configuração -->
+  <div class="modal-overlay" id="modal-config">
+    <div class="modal modal-config">
+      <div class="modal-header">
+        <h2><i class="fas fa-exclamation-circle"></i> Configuração Necessária</h2>
+        <button type="button" class="close-button" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="config-content">
+          <p>O sistema de atualização não está configurado corretamente.</p>
+          <p>Configure o repositório GitHub em <strong>app-config.js</strong> para habilitar as atualizações automáticas.</p>
+          <div class="config-example">
+            <p><strong>Exemplo de configuração:</strong></p>
+            <pre><code>UPDATE_CONFIG: {
+  github: {
+    owner: "seu-usuario",
+    repo: "seu-repositorio",
+    enabled: true
+  }
+}</code></pre>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-modal-close>Entendi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Confirmação -->
+  <div class="modal-overlay" id="modal-confirm">
+    <div class="modal modal-confirm">
+      <div class="modal-header">
+        <h2><i class="fas fa-question-circle"></i> <span id="confirm-title">Confirmação</span></h2>
+        <button type="button" class="close-button" data-modal-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="confirm-content">
+          <p id="confirm-message">Tem certeza que deseja continuar?</p>
+          <p id="confirm-details" class="confirm-details"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close id="confirm-cancel">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirm-ok">Confirmar</button>
+      </div>
+    </div>
+  </div>
   
+  <script src="src/js/modal-close-fix.js"></script>
+  <script src="src/js/modal-manager.js"></script>
   <script src="src/js/renderer.js"></script>
   <script src="src/js/editor.js"></script>
-  <script src="src/js/menu.js"></script>
+  <script src="src/js/script.js"></script>
+  <script src="src/js/update-ui.js"></script>
 </body>
 </html> 
