@@ -44,6 +44,14 @@ Um aplicativo desktop Electron que permite criar e editar textos de forma oculta
 - `Ctrl/Cmd + I` - Itálico
 - `Ctrl/Cmd + U` - Sublinhado
 - `Ctrl/Cmd + Shift + Space` - Restaurar foco da aplicação
+- `Alt + T` - Alternar entre opacidade total (100%) e parcial (50%)
+- `Alt + [` - Diminuir opacidade em 10%
+- `Alt + ]` - Aumentar opacidade em 10%
+- `Alt + Space` - Iniciar teleprompter
+- `P` - Pausar/Continuar teleprompter
+- `↑` - Aumentar velocidade do teleprompter
+- `↓` - Diminuir velocidade do teleprompter
+- `Home` - Reiniciar teleprompter
 
 ### Segurança
 - O aplicativo é invisível para:
@@ -155,6 +163,72 @@ ghostpad/
 - HTML/CSS/JavaScript - Interface do usuário
 - Electron Store - Armazenamento de configurações
 - Font Awesome - Ícones da interface
+
+## Padrão de Commits
+
+Este projeto segue o padrão de commits convencionais (Conventional Commits) para manter um histórico de alterações claro e semântico.
+
+### Tipos de Commits
+
+- `feat`: Nova funcionalidade
+- `fix`: Correção de bug
+- `docs`: Alterações na documentação
+- `style`: Alterações de formatação (espaços, ponto e vírgula, etc)
+- `refactor`: Refatoração de código
+- `test`: Adição ou modificação de testes
+- `chore`: Atualizações de tarefas, configurações, etc.
+
+### Formato do Commit
+
+```
+<tipo>(escopo opcional): <descrição>
+
+[corpo opcional]
+
+[rodapé opcional]
+```
+
+### Exemplos
+
+```
+feat(editor): adiciona suporte a múltiplos arquivos
+
+- Implementa sistema de abas
+- Adiciona menu de contexto
+- Melhora performance do carregamento
+```
+
+```
+fix(segurança): corrige vazamento de memória no modo invisível
+
+Corrige problema onde o modo invisível estava causando vazamento de memória após
+longos períodos de uso.
+```
+
+### Como Criar Commits
+
+1. Use o comando interativo:
+```bash
+npm run commit
+```
+
+2. Siga as instruções do assistente para:
+   - Selecionar o tipo de commit
+   - Definir o escopo (opcional)
+   - Escrever a descrição
+   - Adicionar corpo e rodapé (opcionais)
+
+### Versionamento Semântico
+
+O projeto utiliza versionamento semântico (SemVer) onde:
+- `MAJOR`: alterações incompatíveis
+- `MINOR`: novas funcionalidades compatíveis
+- `PATCH`: correções compatíveis
+
+Para gerar uma nova versão:
+```bash
+npm run release
+```
 
 ## Considerações de Segurança
 

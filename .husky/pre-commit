@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# Verifica se há arquivos para commit
+if [ -z "$(git diff --cached --name-only)" ]; then
+  echo "Nenhum arquivo para commit"
+  exit 1
+fi
+
+# Executa o lint-staged
+npx lint-staged
